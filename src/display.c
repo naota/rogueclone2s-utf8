@@ -5,6 +5,8 @@
 
 #include <string.h>
 #include <curses.h>
+#include <iconv.h>
+#include <stdlib.h>
 
 #include "rogue.h"
 #include "display.h"
@@ -219,6 +221,7 @@ addstr_rogue(const char *str)
     return addstr(str);
 }
 
+static iconv_t conv=NULL;
 /*
  * mvaddstr_rogue
  * mvaddstr のラッパー関数
@@ -243,7 +246,24 @@ mvaddstr_rogue(int y, int x, const char *str)
 	attrset(COLOR_PAIR(0));
     }
 #endif /* COLOR */
-    return mvaddstr(y, x, str);
+
+    size_t inleft=strlen(str), outleft=1024;
+    char *inptr= str;
+    char *outbuf=malloc(outleft);
+    memset(outbuf, 0, 1024);
+    char *outptr=outbuf;
+
+    if(!conv) {
+      conv=iconv_open("UTF-8//TRANSLIT", "EUC-JP");
+    }else {
+      iconv(conv, NULL,NULL,NULL,NULL);
+    }
+    int n = iconv(conv, 
+		  &inptr, &inleft, 
+		  &outptr, &outleft);
+    int res = mvaddstr(y, x, outbuf);
+    free(outbuf);
+    return res;
 }
 
 /*

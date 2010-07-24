@@ -9,6 +9,7 @@ AC_CONFIG_HEADER([config.h])
 
 # Checks for programs.
 AC_PROG_CC
+AM_PROG_CC_C_O
 
 # Checks for libraries.
 
@@ -26,10 +27,11 @@ AC_PROG_GCC_TRADITIONAL
 AC_FUNC_MEMCMP
 AC_TYPE_SIGNAL
 AC_FUNC_STAT
-AC_CHECK_HEADERS([windows.h])
-AC_CHECK_LIB([ncurses], [initscr])
+AC_FUNC_MALLOC
+AC_CHECK_HEADERS([windows.h locale.h])
+AC_CHECK_LIB([ncursesw], [initscr])
 AC_CHECK_LIB([kernel32], [_sleep])
-AC_CHECK_FUNCS([chdir getcwd getenv getlogin memset putenv setenv strchr sleep])
+AC_CHECK_FUNCS([chdir getcwd getenv getlogin memset putenv setenv setlocale strchr sleep])
 AC_CHECK_FUNCS([assume_default_colors attr_get])
 
 

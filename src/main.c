@@ -12,6 +12,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <locale.h>
 
 #include "rogue.h"
 #include "main.h"
@@ -38,6 +39,8 @@ main(int argc, char *argv[])
     int first = 1;
     char buf[80];
 #endif /* ORIGINAL */
+
+    setlocale(LC_ALL,"");
 
     progname = argv[0];
 

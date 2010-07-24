@@ -1,6 +1,9 @@
 2010-07-25  Naohiro Aota  <naota@elisp.net>
 
+	* src/display.c (mvaddstr_rogue): EUC-JP を UTF-8 に変えて出力
+
 	* src/main.c (read_mesg): buffer のサイズ拡大
+	(main): LC_ALL の設定。
 
 2006-06-08  FUNABARA Masao
 
