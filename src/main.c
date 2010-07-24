@@ -73,8 +73,9 @@ main(int argc, char *argv[])
 int
 read_mesg(char *argv_msgfile)
 {
+    const int buf_size = 1024;
     FILE *mesg_file;
-    char buf[256];
+    char buf[buf_size];
     int i, n, s, e;
 
     if ((mesg_file = fopen(argv_msgfile, "r")) == NULL) {
@@ -82,7 +83,7 @@ read_mesg(char *argv_msgfile)
 	return 1;
     }
 
-    while (fgets(buf, 256, mesg_file) != NULL) {
+    while (fgets(buf, buf_size, mesg_file) != NULL) {
 	if ((n = atoi(buf)) > 0 && n < 500) {
 	    for (i = 0; buf[i] && buf[i] != '\"'; ++i) continue;
 	    if (buf[i]) {

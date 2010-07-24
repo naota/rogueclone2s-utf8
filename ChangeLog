@@ -1,3 +1,7 @@
+2010-07-25  Naohiro Aota  <naota@elisp.net>
+
+	* src/main.c (read_mesg): buffer のサイズ拡大
+
 2006-06-08  FUNABARA Masao
 
 	* Release 6 公開
