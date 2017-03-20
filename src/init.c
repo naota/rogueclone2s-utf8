@@ -16,6 +16,7 @@
 #include <curses.h>
 #include <unistd.h>
 #include <getopt.h>
+#include <iconv.h>
 
 #include "rogue.h"
 #include "init.h"
@@ -166,6 +167,14 @@ player_init(void)
 void
 clean_up(char *estr)
 {
+    size_t inleft=strlen(estr), outleft=1024;
+    char *inptr= estr;
+    char *outbuf=malloc(outleft);
+    memset(outbuf, 0, 1024);
+    char *outptr=outbuf;
+    iconv_t conv = iconv_open("UTF-8//TRANSLIT", "EUC-JP");
+    iconv(conv,  &inptr, &inleft, &outptr, &outleft);
+
     if (save_is_interactive) {
 	if (init_curses) {
 	    move(ROGUE_LINES - 1, 0);
@@ -177,9 +186,10 @@ clean_up(char *estr)
 	}
 	endwin();
 	printf("\r\n");
-	printf(estr);
+	printf(outbuf);
 	printf("\r\n");
     }
+    free(outbuf);
     md_exit(0);
 }
 
